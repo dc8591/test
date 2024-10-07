@@ -2,125 +2,59 @@
   <div align="center">
   <h1>
 <br >
-  Interview Proctoring<br /> <br />
-    <a href="https://github.com/psf/black">
-      <img
-        src="https://img.shields.io/badge/code%20style-black-000000.svg"
-        alt="The Uncompromising Code Formatter"
-      />
-    </a>
-      <a>
-      <img
-        src="https://img.shields.io/badge/python-3.9%20%7C%203.10-blue"
-        alt="Python Versions"
-      />
-    </a>
-    <a href="https://opensource.org/licenses/MIT">
-      <img
-        src="https://img.shields.io/badge/GUI-PyQt6-green"
-        alt="PyQt6"
-      />
-    </a>
-    <a href="https://opensource.org/licenses/MIT">
-      <img
-        src="https://img.shields.io/badge/CV-OpenCV-red"
-        alt="CV-OpenCV-red"
-      />
-    </a>
-    <a href="https://opensource.org/licenses/MIT">
-      <img
-        src="https://img.shields.io/badge/DL-TensorFlow-orange"
-        alt="TensorFlow"
-      />
-    </a>
-     <a href="https://opensource.org/licenses/MIT">
-      <img
-        src="https://img.shields.io/badge/License-MIT-blue.svg"
-        alt="License: MIT"
-      />
-    </a>
+  Exa AI <br /> <br />
   </h1>
   </div>
-   <h3>InterviewProctorApp is a tool designed to monitor and analyze participant behavior during remote interviews. It uses computer vision and Deep learning techniques to detect multiple faces, eye movements, and head positions, ensuring a fair and secure interview process.
-</h3>
-  <h4>Welcome to the setup guide for the Interview Proctoring Module. Follow these steps to get your environment ready and run the application.</h4>
-</p>
+  </p>
+ 
 
----
-## Prerequisites
-- Ensure you have Git installed on your system.
-- Python 3 should be installed on your system.
+Exa AI leverages advanced embeddings-based search technology to precisely locate the content you need on the web. It provides three main functionalities through its API:
 
-## Step 1: Clone the Repository
-First, clone the repository to your local machine using Git. Open your terminal and run:
+1. **Search for Pages**: Utilize natural language queries or Google-style keyword searches to find any page on the web.
 
-```
-git clone https://deep_07@bitbucket.org/codistedev/interview-proctoring.git
-```
+2. **Get Contents from Pages**: Extract clean, up-to-date, and parsed HTML from Exa search results. The 'highlights' feature allows for semantically targeted content extraction.
 
-## Step 2: Create a Virtual Environment
-Creating a virtual environment is crucial to manage dependencies.
+3. **Find Similar Pages**: Identify and return pages that are similar in meaning based on a provided link.
 
-### For Mac & Linux:
-Run the following commands:
+### Basic Code Snippet
 
-```
-python3 -m venv env/interview_proctoring
-source env/interview_proctoring/bin/activate
-```
+Below is a basic example to illustrate how to use the Exa AI API to search for pages:
 
-### For Windows:
-Run these commands in your Command Prompt or PowerShell:
+```python
+import requests
+import json
 
-```
-python -m venv env\interview_proctoring
-.\env\interview_proctoring\Scripts\activate
-```
+url = "https://api.exa.ai/search"
 
-With your virtual environment active, install the required Python packages:
+headers = {
+    "accept": "application/json",
+    "content-type": "application/json",
+    "x-api-key": "your_api_key_here",
+}
 
+query = "what is black forest flux text to image model?"
+payload = {
+    "query": query,
+    "type": "neural",
+    "useAutoprompt": True,
+    "numResults": 5,
+    "excludeDomains": ["en.wikipedia.org"],
+    "contents": {"text": True, "summary": True},
+}
 
-#### For Windows:
-```
-pip install -r requirements.txt
-```
+response = requests.post(url, headers=headers, json=payload).json()
 
-#### For Mac & Linux:
-```
-pip3 install -r requirements.txt
+# Print the JSON response
+print(json.dumps(response, indent=2))
+
+# Save the response to a file
+with open("response.json", "w") as file:
+    json.dump(response, file, indent=4)
 ```
 
-## Step 3: Run the Application
-Finally, start the application with the following command:
+### Key Features:
+- Use of advanced neural search technology.
+- Ability to exclude specific domains from search results.
+- Option to obtain both text and summary through the 'contents' parameter.
 
-#### For Windows:
-```
-python main.py
-```
-
-#### For Mac & Linux:
-```
-python3 main.py
-```
-
-### Demo
-
-You can view a demonstration of the InterviewProctorApp in action : 
-
-https://github.com/user-attachments/assets/9e4b6a11-6232-40ca-a183-14cca81fe512
-
-## File Structure
-
-- `main.py`: The main application script
-- `utils.py`: Utility functions for detection and image processing
-- `model/`: Directory containing the TensorFlow Lite model
-- `temp/`: Directory where screenshots are saved (created at runtime)
-
-## Acknowledgments
-
-- This project uses the MoveNet model for pose estimation
-- Face detection is powered by the InsightFace library
-
-## Conclusion
-Your setup is now complete! If you encounter any issues, submit an issue on the GitHub repository.
----
+Ensure you replace `"your_api_key_here"` with your actual API key when making requests.
